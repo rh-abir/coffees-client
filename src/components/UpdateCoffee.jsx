@@ -1,7 +1,13 @@
+import { useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 
-const CoffeePost = () => {
-  const handleAddCoffee = (event) => {
+const UpdateCoffee = () => {
+  const loadedCoffee = useLoaderData();
+//   console.log(loadedCoffee);
+
+const { _id, name, chef, supplier, taste, cetegory, details, photo} = loadedCoffee;
+
+  const handleUpdateCoffee = (event) => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
@@ -12,7 +18,7 @@ const CoffeePost = () => {
     const details = form.details.value;
     const photo = form.photo.value;
 
-    const newCoffees = {
+    const updeteCoffee = {
       name,
       chef,
       supplier,
@@ -22,14 +28,14 @@ const CoffeePost = () => {
       photo,
     };
 
-    console.log(newCoffees);
+    // console.log(updeteCoffee);
 
-    fetch("http://localhost:5000/coffees", {
-      method: "POST",
+    fetch(`http://localhost:5000/coffees/${_id}`, {
+      method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newCoffees),
+      body: JSON.stringify(updeteCoffee),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -48,16 +54,11 @@ const CoffeePost = () => {
   return (
     <div className="p-20 bg-[#F4F3F0]">
       <div>
-        <h2 className="text-5xl text-center">Add New Coffee</h2>
-        <p>
-          It is a long established fact that a reader will be distraceted by the
-          readable content of a page when looking at its layout. The point of
-          using Lorem Ipsum is that it has a more-or-less normal distribution of
-          letters, as opposed to using Content here.
-        </p>
+        <h2 className="text-5xl text-center">Update a Coffee</h2>
+        
       </div>
 
-      <form onSubmit={handleAddCoffee}>
+      <form onSubmit={handleUpdateCoffee}>
         {/* input name and chef */}
         <div className="flex gap-7 mt-20">
           <div className="form-control md:w-1/2">
@@ -69,6 +70,7 @@ const CoffeePost = () => {
                 type="text"
                 name="name"
                 placeholder="coffee name"
+                defaultValue={name}
                 className="input input-bordered w-full"
               />
             </label>
@@ -82,6 +84,7 @@ const CoffeePost = () => {
                 type="text"
                 name="chef"
                 placeholder="Chef"
+                defaultValue={chef}
                 className="input input-bordered w-full"
               />
             </label>
@@ -98,6 +101,7 @@ const CoffeePost = () => {
                 type="text"
                 name="supplier"
                 placeholder="Supplier"
+                defaultValue={supplier}
                 className="input input-bordered w-full"
               />
             </label>
@@ -111,6 +115,7 @@ const CoffeePost = () => {
                 type="text"
                 name="taste"
                 placeholder="Taste"
+                defaultValue={taste}
                 className="input input-bordered w-full"
               />
             </label>
@@ -128,6 +133,7 @@ const CoffeePost = () => {
                 type="text"
                 name="category"
                 placeholder="Category"
+                defaultValue={cetegory}
                 className="input input-bordered w-full"
               />
             </label>
@@ -141,6 +147,7 @@ const CoffeePost = () => {
                 type="text"
                 name="details"
                 placeholder="Details"
+                defaultValue={details}
                 className="input input-bordered w-full"
               />
             </label>
@@ -157,6 +164,7 @@ const CoffeePost = () => {
                 type="text"
                 name="photo"
                 placeholder="Photo"
+                defaultValue={photo}
                 className="input input-bordered w-full"
               />
             </label>
@@ -169,4 +177,4 @@ const CoffeePost = () => {
   );
 };
 
-export default CoffeePost;
+export default UpdateCoffee;
