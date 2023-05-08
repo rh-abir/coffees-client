@@ -40,7 +40,7 @@ const { _id, name, chef, supplier, taste, cetegory, details, photo} = loadedCoff
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        if (data.insertedId) {
+        if (data.modifiedCount > 0) {
           Swal.fire({
             title: "Success!",
             text: "Do you want to continue",
